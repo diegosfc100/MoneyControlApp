@@ -8,10 +8,10 @@ namespace MoneyNote.Models
         [Key]
         public int CaregoryId { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(5)")]
         public string Icon { get; set; } = "";
 
-        [Column(TypeName = "nvarchar(5)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
 
         [Column(TypeName = "nvarchar(10)")]

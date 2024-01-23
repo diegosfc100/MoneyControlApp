@@ -2,12 +2,10 @@
 
 namespace MoneyNote.Models
 {
-    public class AplicationDbContext:DbContext
+    public class ApplicationDbContext:DbContext
     {
-        public AplicationDbContext(DbContextOptions options): base(options)
-        {
-            
-        }
+        public ApplicationDbContext(DbContextOptions options):base(options)
+        {}
 
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MoneyNote.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,11 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//Injeção de Dependencia
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
 var app = builder.Build();
 
-//Injeção de Dependencia
-builder.Services.AddDbContext<AplicationDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 // Configure the HTTP request pipeline. 
 if (!app.Environment.IsDevelopment())
