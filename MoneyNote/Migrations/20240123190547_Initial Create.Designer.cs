@@ -26,11 +26,11 @@ namespace MoneyNote.Migrations
 
             modelBuilder.Entity("MoneyNote.Models.Category", b =>
                 {
-                    b.Property<int>("CaregoryId")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CaregoryId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -44,7 +44,7 @@ namespace MoneyNote.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("CaregoryId");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });

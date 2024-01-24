@@ -6,7 +6,7 @@ namespace MoneyNote.Models
     public class Category
     {
         [Key]
-        public int CaregoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Column(TypeName = "nvarchar(5)")]
         public string Icon { get; set; } = "";
@@ -16,5 +16,14 @@ namespace MoneyNote.Models
 
         [Column(TypeName = "nvarchar(10)")]
         public string Type { get; set; } = "Expense";
+
+        [NotMapped]
+        public string? TitleWithIcon
+        {
+            get
+            {
+                return this.Icon + " " + this.Title;
+            }
+        }
     }
 }

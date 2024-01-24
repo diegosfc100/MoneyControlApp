@@ -15,8 +15,8 @@ namespace MoneyNote.Migrations
                 {
                     CaregoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Icon = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(5)", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(5)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(10)", nullable: false)
                 },
                 constraints: table =>
@@ -30,7 +30,7 @@ namespace MoneyNote.Migrations
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CaregoryId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(5)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -39,17 +39,17 @@ namespace MoneyNote.Migrations
                 {
                     table.PrimaryKey("PK_Transaction", x => x.TransactionId);
                     table.ForeignKey(
-                        name: "FK_Transaction_Categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_Transaction_Categories_CaregoryId",
+                        column: x => x.CaregoryId,
                         principalTable: "Categories",
                         principalColumn: "CaregoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_CategoryId",
+                name: "IX_Transaction_CaregoryId",
                 table: "Transaction",
-                column: "CategoryId");
+                column: "CaregoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
