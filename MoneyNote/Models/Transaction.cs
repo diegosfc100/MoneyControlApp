@@ -8,11 +8,11 @@ namespace MoneyNote.Models
         [Key]
         public int TransactionId { get; set; }
 
-        [Range(1,int.MaxValue, ErrorMessage = "Please select a category.")]
+        [Range(1,int.MaxValue, ErrorMessage = "Por favor, selecione uma categoria.")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Amount should be greater than 0.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O valor deve ser maior que 0.")]
         public int Amount { get; set; }
 
         [Column(TypeName = "nvarchar(80)")]

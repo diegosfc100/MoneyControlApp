@@ -12,10 +12,11 @@ namespace MoneyNote.Models
         public string Icon { get; set; } = "";
 
         [Column(TypeName = "nvarchar(50)")]
-        [Required(ErrorMessage = "Title is required.")]
+        [Required(ErrorMessage = "O Título é obrigatório.")]
         public string Title { get; set; }
 
         [Column(TypeName = "nvarchar(10)")]
+        [Required(ErrorMessage = "O Tipo é obrigatório.")]
         public string Type { get; set; } = "Expense";
 
         [NotMapped]
