@@ -17,7 +17,7 @@
 
     <partial name="_SideBar" />
 
-    <header>
+    @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MoneyNote</a>
@@ -37,7 +37,19 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header> *@
+
+    <nav class="navbar sticky-top">
+        <div class="container-fluid py-2 px-4">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <div>
+                <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-message"></i>
+                <img class="profile-pic" src="~/profile.png" />
+            </div>
+        </div>
+    </nav>
+
 
     <div class="main-content">
         <div class="container mt-5">
