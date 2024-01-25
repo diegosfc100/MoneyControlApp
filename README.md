@@ -4,7 +4,7 @@
 <p align="center">Este é um Controle Financeiro para registro de receitas e despesas.</p>
 
 <p align="center">
-    <img src="~/app.png" />  
+    <img src="app.png" />  
 </p>
 <br />
 
