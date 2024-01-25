@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyNote.Models;
 
@@ -21,14 +16,13 @@ namespace MoneyNote.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
-              return _context.Categories != null ? 
-                          View(await _context.Categories.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
+            return _context.Categories != null ?
+                        View(await _context.Categories.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
         }
-                
 
-        // GET: Category/AddrEdit
-        public IActionResult AddOrEdit(int id=0)
+        // GET: Category/AddOrEdit
+        public IActionResult AddOrEdit(int id = 0)
         {
             if (id == 0)
                 return View(new Category());
@@ -36,10 +30,10 @@ namespace MoneyNote.Controllers
                 return View(_context.Categories.Find(id));
         }
 
-        // POST: Category/AddOrEdit        
+        // POST: Category/AddOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit([Bind("CategoryId,Icon,Title,Type")] Category category)
+        public async Task<IActionResult> AddOrEdit([Bind("CategoryId,Title,Icon,Type")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +46,7 @@ namespace MoneyNote.Controllers
             }
             return View(category);
         }
-                        
+
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -67,10 +61,9 @@ namespace MoneyNote.Controllers
             {
                 _context.Categories.Remove(category);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

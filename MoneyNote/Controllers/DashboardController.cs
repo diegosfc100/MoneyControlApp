@@ -16,7 +16,7 @@ namespace MoneyNote.Controllers
 
         public async Task<ActionResult> Index()
         {
-            //Last 7 Days
+            //Ultimos 7 dias
             DateTime StartDate = DateTime.Today.AddDays(-6);
             DateTime EndDate = DateTime.Today;
 
@@ -25,39 +25,40 @@ namespace MoneyNote.Controllers
                 .Where(y => y.Date >= StartDate && y.Date <= EndDate)
                 .ToListAsync();
 
-            //Total Income
+            //Renda Total
             int TotalIncome = SelectedTransactions
                 .Where(i => i.Category.Type == "Income")
                 .Sum(j => j.Amount);
-            ViewBag.TotalIncome = TotalIncome.ToString("C0");
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("pt-BR");
+            culture.NumberFormat.CurrencySymbol = "R$";
+            ViewBag.TotalIncome = String.Format(culture, "{0:C}", TotalIncome);
 
-            //Total Expense
+
+            //Despesa Total
             int TotalExpense = SelectedTransactions
                 .Where(i => i.Category.Type == "Expense")
-                .Sum(j => j.Amount);
-            ViewBag.TotalExpense = TotalExpense.ToString("C0");
+                .Sum(j => j.Amount);                                  
+            ViewBag.TotalExpense = String.Format(culture, "{0:C}", TotalExpense);
 
-            //Balance
-            int Balance = TotalIncome - TotalExpense;
-            CultureInfo culture = CultureInfo.CreateSpecificCulture("pt-BR");
-            culture.NumberFormat.CurrencyNegativePattern = 1;
-            ViewBag.Balance = String.Format(culture, "{0:C0}", Balance);
+            //Balanço
+            int Balance = TotalIncome - TotalExpense;             
+            ViewBag.Balance = String.Format(culture, "{0:C}", Balance);
 
-            //Doughnut Chart - Expense By Category
+            //Gráfico de Despesas por Categoria
             ViewBag.DoughnutChartData = SelectedTransactions
                 .Where(i => i.Category.Type == "Expense")
                 .GroupBy(j => j.Category.CategoryId)
                 .Select(k => new
-                {
-                    categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
-                    amount = k.Sum(j => j.Amount),
-                    formattedAmount = k.Sum(j => j.Amount).ToString("C0"),
-                })
+                    {
+                        categoryTitleWithIcon = k.First().Category.Icon + " " + k.First().Category.Title,
+                        amount = k.Sum(j => j.Amount),
+                        formattedAmount = k.Sum(j => j.Amount).ToString("C", new CultureInfo("pt-BR")),
+                    })
                 .OrderByDescending(l => l.amount)
                 .ToList();
 
-            //Spline Chart - Income vs Expense
-            //Income
+            //Gráfico Renda vs Despesa
+            //Renda
             List<SplineChartData> IncomeSummary = SelectedTransactions
                 .Where(i => i.Category.Type == "Income")
                 .GroupBy(j => j.Date)
@@ -68,7 +69,7 @@ namespace MoneyNote.Controllers
                 })
                 .ToList();
 
-            //Expense
+            //Despesa
             List<SplineChartData> ExpenseSummary = SelectedTransactions
                 .Where(i => i.Category.Type == "Expense")
                 .GroupBy(j => j.Date)
@@ -79,7 +80,7 @@ namespace MoneyNote.Controllers
                 })
                 .ToList();
 
-            //Combine Income & Expense
+            //Combinando receitas e despesas
             string[] Last7Days = Enumerable.Range(0, 7)
                 .Select(i => StartDate.AddDays(i).ToString("dd-MMM"))
                 .ToArray();
@@ -95,8 +96,7 @@ namespace MoneyNote.Controllers
                                           income = income == null ? 0 : income.income,
                                           expense = expense == null ? 0 : expense.expense,
                                       };
-
-            //Recent Transactions
+            //Transações recentes
             ViewBag.RecentTransactions = await _context.Transaction
                 .Include(i => i.Category)
                 .OrderByDescending(j => j.Date)

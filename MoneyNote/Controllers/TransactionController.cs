@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyNote.Models;
 
@@ -28,14 +23,14 @@ namespace MoneyNote.Controllers
         // GET: Transaction/AddOrEdit
         public IActionResult AddOrEdit(int id = 0)
         {
-            PopulateCategories();   
+            PopulateCategories();
             if(id == 0)
-                return View(new Transaction()); 
+                return View(new Transaction());
             else
                 return View(_context.Transaction.Find(id));
         }
 
-        // POST: Transaction/AddOrEdit
+        // POST: Transaction/AddOrEdit        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
@@ -67,7 +62,7 @@ namespace MoneyNote.Controllers
             {
                 _context.Transaction.Remove(transaction);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
